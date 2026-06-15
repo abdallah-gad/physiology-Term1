@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A.D.Gad | Physiology Exam Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --primary: #c41e3a;
+    --primary-dark: #8b0000;
+    --secondary: #ffd700;
+    --dark: #0a0a0a;
+    --darker: #050505;
+    --light: #f5f5f5;
+    --gray: #9ca3af;
+    --success: #10b981;
+    --error: #ef4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--dark);
+    color: var(--light);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* خلفية أنيقة */
+.hero-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at 30% 40%, rgba(196,30,58,0.15) 0%, rgba(0,0,0,0.95) 70%);
+    z-index: -1;
+}
+
+.particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    background: rgba(196,30,58,0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: floatParticle 20s infinite linear;
+}
+
+@keyframes floatParticle {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.5; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+}
+
+/* شريط التنقل العلوي */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(5,5,5,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(196,30,58,0.3);
+    padding: 12px 24px;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-small {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--secondary);
+}
+
+.brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.progress-stats {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.stat-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.stat-answered { background: rgba(255,255,255,0.1); color: var(--gray); }
+.stat-correct { background: rgba(16,185,129,0.15); color: var(--success); border: 1px solid var(--success); }
+.stat-wrong { background: rgba(239,68,68,0.15); color: var(--error); border: 1px solid var(--error); }
+.stat-percent { background: rgba(255,215,0,0.15); color: var(--secondary); border: 1px solid var(--secondary); }
+
+.progress-bar-container {
+    width: 180px;
+    height: 6px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 3px;
+    transition: width 0.3s;
+}
+
+/* شاشة البداية */
+.start-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px 20px;
+}
+
+.start-card {
+    background: rgba(10,10,10,0.8);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(196,30,58,0.3);
+    border-radius: 32px;
+    padding: 50px 40px;
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.start-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--secondary);
+}
+
+.main-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--secondary);
+    margin-bottom: 20px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,215,0,0.4); }
+    50% { box-shadow: 0 0 0 15px rgba(255,215,0,0); }
+}
+
+.start-card h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+}
+
+.start-card .sub {
+    color: var(--gray);
+    margin-bottom: 25px;
+}
+
+.filter-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin: 25px 0;
+}
+
+.filter-btns button {
+    padding: 8px 20px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--gray);
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.2s;
+}
+
+.filter-btns button:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.filter-btns button.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border-color: var(--secondary);
+    color: white;
+}
+
+.q-count {
+    margin: 20px 0;
+}
+
+.q-count span {
+    color: var(--secondary);
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.btn-start {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    padding: 14px 40px;
+    border-radius: 40px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(196,30,58,0.4);
+}
+
+/* واجهة الاختبار */
+.quiz-wrapper {
+    display: none;
+    padding: 100px 20px 60px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 30px 0 20px;
+}
+
+.section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+}
+
+.section-line.right {
+    background: linear-gradient(270deg, var(--primary), transparent);
+}
+
+.section-title {
+    color: var(--secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: rgba(196,30,58,0.2);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.question-card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 28px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(196,30,58,0.2);
+    transition: all 0.3s;
+}
+
+.question-card:hover {
+    transform: translateX(-5px);
+    border-color: var(--secondary);
+}
+
+.question-card.correct {
+    border-right: 4px solid var(--success);
+}
+
+.question-card.wrong {
+    border-right: 4px solid var(--error);
+}
+
+.q-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.q-num {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.q-cat {
+    background: rgba(196,30,58,0.3);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.q-text {
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: var(--light);
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option {
+    padding: 12px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 0.95rem;
+}
+
+.option::before {
+    content: attr(data-letter);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.option:hover:not(:disabled) {
+    background: rgba(196,30,58,0.1);
+    border-color: var(--primary);
+    transform: translateX(-5px);
+}
+
+.option.correct {
+    background: rgba(16,185,129,0.15);
+    border-color: var(--success);
+}
+
+.option.correct::before {
+    background: var(--success);
+    color: white;
+}
+
+.option.wrong {
+    background: rgba(239,68,68,0.15);
+    border-color: var(--error);
+}
+
+.option.wrong::before {
+    background: var(--error);
+    color: white;
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+.feedback {
+    margin-top: 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.feedback.correct {
+    background: rgba(16,185,129,0.1);
+    border-right: 3px solid var(--success);
+    color: #a7f3d0;
+}
+
+.feedback.wrong {
+    background: rgba(239,68,68,0.1);
+    border-right: 3px solid var(--error);
+    color: #fecaca;
+}
+
+.submit-area {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.btn-submit {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    padding: 14px 50px;
+    border-radius: 40px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(196,30,58,0.4);
+}
+
+.btn-submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* نتيجة الاختبار */
+.results-screen {
+    max-width: 800px;
+    margin: 100px auto 50px;
+    padding: 40px;
+    background: rgba(10,10,10,0.9);
+    backdrop-filter: blur(15px);
+    border-radius: 32px;
+    border: 1px solid rgba(196,30,58,0.3);
+    text-align: center;
+    display: none;
+    animation: zoomIn 0.5s ease;
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.results-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--secondary);
+    margin-bottom: 20px;
+}
+
+.results-screen h2 {
+    color: var(--secondary);
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    margin: 25px auto;
+    position: relative;
+}
+
+.score-svg {
+    transform: rotate(-90deg);
+}
+
+.score-bg {
+    fill: none;
+    stroke: rgba(255,255,255,0.1);
+    stroke-width: 10;
+}
+
+.score-fill {
+    fill: none;
+    stroke: url(#scoreGrad);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.score-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.score-big {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--secondary);
+}
+
+.results-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.result-stat {
+    padding: 15px;
+    border-radius: 16px;
+}
+
+.result-stat.c { background: rgba(16,185,129,0.1); border: 1px solid var(--success); }
+.result-stat.w { background: rgba(239,68,68,0.1); border: 1px solid var(--error); }
+.result-stat.p { background: rgba(255,215,0,0.1); border: 1px solid var(--secondary); }
+
+.result-stat .num {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+
+.result-stat.c .num { color: var(--success); }
+.result-stat.w .num { color: var(--error); }
+.result-stat.p .num { color: var(--secondary); }
+
+.btn-restart {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    padding: 12px 30px;
+    border-radius: 40px;
+    color: white;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: all 0.3s;
+}
+
+.btn-home {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--gray);
+    padding: 12px 30px;
+    border-radius: 40px;
+    color: var(--gray);
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    margin: 10px 5px;
+    transition: all 0.3s;
+}
+
+.btn-restart:hover, .btn-home:hover {
+    transform: translateY(-2px);
+}
+
+.review-area {
+    text-align: right;
+    margin-top: 30px;
+}
+
+.review-area h3 {
+    color: var(--secondary);
+    margin-bottom: 15px;
+}
+
+.review-item {
+    background: rgba(239,68,68,0.1);
+    border-right: 3px solid var(--error);
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    text-align: right;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .start-card { padding: 30px 20px; }
+    .start-card h1 { font-size: 1.5rem; }
+    .question-card { padding: 18px; }
+    .results-screen { padding: 25px; margin: 80px 15px 30px; }
+    .results-stats { gap: 8px; }
+    .result-stat .num { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero-bg"></div>
+<div class="particles" id="particles"></div>
+
+<nav class="navbar" id="navbar" style="display: none;">
+    <div class="nav-container">
+        <div class="logo-area">
+            <img src="images/logo.png" class="logo-small" onerror="this.src='https://via.placeholder.com/40?text=AD'">
+            <span class="brand">A.D.Gad</span>
+        </div>
+        <div class="progress-stats">
+            <span class="stat-badge stat-answered" id="statAnswered">0/0</span>
+            <span class="stat-badge stat-correct" id="statCorrect">✅ 0</span>
+            <span class="stat-badge stat-wrong" id="statWrong">❌ 0</span>
+            <span class="stat-badge stat-percent" id="statPercent">📊 0%</span>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressFill" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- شاشة البداية -->
+<div class="start-screen" id="startScreen">
+    <div class="start-card">
+        <img src="images/logo.png" class="main-logo" onerror="this.src='https://via.placeholder.com/100?text=ADGad'">
+        <h1>A.D.Gad | Physiology Exam</h1>
+        <p class="sub">📚 اختبار شامل في الفيزيولوجيا</p>
+        <div class="filter-btns" id="filterBtns">
+            <button class="active" data-cat="all">📚 الكل</button>
+            <button data-cat="cell">🔬 Cell</button>
+            <button data-cat="blood">🩸 Blood</button>
+            <button data-cat="nerve">⚡ Nervous</button>
+            <button data-cat="digest">🫃 Digestive</button>
+            <button data-cat="senses">👁️ Senses & CVS</button>
+        </div>
+        <div class="q-count">📋 عدد الأسئلة: <span id="totalQ">0</span></div>
+        <button class="btn-start" id="startBtn">▶ ابدأ الاختبار</button>
+    </div>
+</div>
+
+<!-- واجهة الاختبار -->
+<div class="quiz-wrapper" id="quizWrapper">
+    <div id="questionsContainer"></div>
+    <div class="submit-area">
+        <button class="btn-submit" id="submitBtn" disabled>🎯 عرض النتيجة</button>
+    </div>
+</div>
+
+<!-- شاشة النتائج -->
+<div class="results-screen" id="resultsScreen">
+    <img src="images/logo.png" class="results-logo" onerror="this.src='https://via.placeholder.com/80?text=ADGad'">
+    <h2>🏆 اكتمل الاختبار!</h2>
+    <div class="score-circle">
+        <svg width="150" height="150" viewBox="0 0 150 150">
+            <defs><linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#c41e3a"/><stop offset="100%" stop-color="#ffd700"/></linearGradient></defs>
+            <circle class="score-bg" cx="75" cy="75" r="60"/>
+            <circle class="score-fill" id="scoreFill" cx="75" cy="75" r="60" stroke-dasharray="377" stroke-dashoffset="377"/>
+        </svg>
+        <div class="score-text">
+            <div class="score-big" id="finalScore">0</div>
+            <div style="font-size: 0.7rem;">من <span id="finalTotal">0</span></div>
+        </div>
+    </div>
+    <div id="resultMessage" class="result-msg"></div>
+    <div class="results-stats">
+        <div class="result-stat c"><div class="num" id="resultCorrect">0</div><div>✅ صح</div></div>
+        <div class="result-stat w"><div class="num" id="resultWrong">0</div><div>❌ خطأ</div></div>
+        <div class="result-stat p"><div class="num" id="resultPercent">0%</div><div>📊 النسبة</div></div>
+    </div>
+    <button class="btn-restart" onclick="restartQuiz()">🔄 إعادة الاختبار</button>
+    <button class="btn-home" onclick="goHome()">🏠 الصفحة الرئيسية</button>
+    <div class="review-area" id="reviewArea"></div>
+</div>
+
+<script>
+const L = ['أ', 'ب', 'ج', 'د'];
+const CATS = {
+    cell: '🔬 Cell Physiology',
+    blood: '🩸 Blood',
+    nerve: '⚡ Nervous System',
+    digest: '🫃 Digestion',
+    senses: '👁️ Special Senses & CVS'
+};
+
+// الأسئلة (نفس الأسئلة السابقة)
+const ALL = [
+    {n:1,cat:'cell',q:"The function of nucleus of the cell is:",opts:["Contains digestive enzymes","Controls cell activities and cell division","Generation of energy","Site of protein synthesis"],c:1,exp:"The nucleus controls cell activities and cell division — it contains the genetic material (DNA)."},
+    {n:2,cat:'cell',q:"Which of the following can dissolve through cell membrane?",opts:["Na","Cl","O₂","None of the above"],c:2,exp:"O₂ is a small non-polar gas molecule — it can diffuse freely through the lipid bilayer of the cell membrane."},
+    {n:3,cat:'cell',q:"In facilitated diffusion:",opts:["Passive (needs no energy)","From high concentration to low concentration of water","Needs carrier","All of the above"],c:3,exp:"Facilitated diffusion is passive (no ATP), moves solutes from high to low concentration, and requires a carrier protein — so all of the above are correct."},
+    {n:4,cat:'cell',q:"In active transport:",opts:["Occurs against concentration gradient (from low to high concentration)","Needs carrier","Energy (ATP) is used","All of the above"],c:3,exp:"Active transport moves substances against their concentration gradient, requires a carrier protein, and uses ATP energy — all of the above."},
+    {n:5,cat:'cell',q:"Most abundant plasma protein is:",opts:["Albumin","Globulin","Fibrinogen","None of the above"],c:0,exp:"Albumin is the most abundant plasma protein (~60% of total plasma protein)."},
+    {n:6,cat:'blood',q:"Life span of RBCs:",opts:["90 days","40 days","120 days","60 days"],c:2,exp:"Red blood cells live for approximately 120 days."},
+    {n:7,cat:'blood',q:"The hormone erythropoietin stimulates red blood cell production. Where is it produced?",opts:["Spleen","Liver","Kidney","Thyroid"],c:2,exp:"Erythropoietin (EPO) is produced mainly by the kidneys."},
+    {n:8,cat:'blood',q:"Which statement about erythrocytes is correct?",opts:["They fight infection","Non nucleated","Produced in spleen","Clot formation"],c:1,exp:"Mature erythrocytes are non-nucleated."},
+    {n:9,cat:'blood',q:"The formation of a blood clot is known as:",opts:["Coagulation","Chemotaxis","Leucopoiesis","Erythropoiesis"],c:0,exp:"Coagulation is the process of blood clotting."},
+    {n:10,cat:'blood',q:"Function of white blood cells:",opts:["Transport oxygen","Maintain homeostasis","Produce haemoglobin","Defend against infection"],c:3,exp:"White blood cells defend against infection."},
+    {n:11,cat:'blood',q:"Vitamin B12:",opts:["Essential for DNA synthesis","Helps myelin sheath formation","Deficiency causes neurological symptoms","All of the above"],c:3,exp:"Vitamin B12 is essential for DNA synthesis, RBC maturation, and myelin sheath formation."},
+    {n:12,cat:'blood',q:"What happens in anemia?",opts:["Too much iron","Not enough red blood cells","Blood becomes thick","Too many WBCs"],c:1,exp:"Anemia is deficiency of red blood cells or hemoglobin."},
+    {n:13,cat:'blood',q:"Most common cause of anemia:",opts:["Too little sleep","Too much sugar","Iron deficiency","X-ray exposure"],c:2,exp:"Iron-deficiency anemia is the most common type worldwide."},
+    {n:14,cat:'blood',q:"Most likely to have anemia:",opts:["Men","Women","Teenagers","Older adults"],c:2,exp:"Teenagers are most susceptible due to rapid growth and menstruation."},
+    {n:15,cat:'blood',q:"How does anemia affect the body?",opts:["Less oxygen delivery","Blood becomes thin","Tissue fluid retention","None"],c:0,exp:"Anemia reduces oxygen-carrying capacity."},
+    {n:16,cat:'blood',q:"Lack of which causes megaloblastic anemia?",opts:["Oxygen","Vitamin C","B-12 and folic acid","CO₂"],c:2,exp:"Deficiency of Vitamin B-12 and folic acid causes megaloblastic anemia."},
+    {n:17,cat:'blood',q:"Signs of anemia:",opts:["Pale gums","Dark circles","Bleeding","All of the above"],c:3,exp:"Signs include pale gums, dark circles, and sometimes bleeding."},
+    {n:18,cat:'blood',q:"Iron-deficiency anemia in teens causes:",opts:["Writing problems","Poor concentration","Both A and B","Hyperactivity"],c:2,exp:"Iron deficiency causes cognitive impairment including writing and concentration issues."},
+    {n:19,cat:'blood',q:"Polycythemia means increase in:",opts:["RBCs","WBCs","Platelets","None"],c:0,exp:"Polycythemia means abnormal increase in red blood cells."},
+    {n:20,cat:'nerve',q:"Neurons carrying impulses away from CNS:",opts:["Efferent","Afferent","Extensors","Sensory"],c:0,exp:"Efferent nerves carry impulses AWAY from the CNS."},
+    {n:21,cat:'nerve',q:"Basic unit of nervous system:",opts:["Glial cell","Meninges","Neuron","CSF"],c:2,exp:"The neuron is the basic functional unit."},
+    {n:22,cat:'nerve',q:"Neuron parts:",opts:["Axon","Dendrite","Nucleus","All"],c:3,exp:"A neuron has all these parts."},
+    {n:23,cat:'nerve',q:"How neurons communicate:",opts:["Electrically","Chemically","Both A and B","Radio waves"],c:2,exp:"Neurons communicate both electrically and chemically."},
+    {n:24,cat:'nerve',q:"Reflex arc consists of:",opts:["Brain to muscle","Receptor to effector","Muscle to brain","None"],c:1,exp:"Reflex arc: receptor → afferent → CNS → efferent → effector."},
+    {n:25,cat:'nerve',q:"K⁺ channels opening causes:",opts:["Depolarization","Repolarization","Contraction","Vesicle release"],c:1,exp:"K⁺ outflow repolarizes the membrane."},
+    {n:26,cat:'nerve',q:"Resting membrane potential (-70 mV) due to:",opts:["Schwann cells","Unequal ion distribution","Action potential","None"],c:1,exp:"Unequal ion distribution creates resting potential."},
+    {n:27,cat:'nerve',q:"Action potential phases:",opts:["Latent","Depolarization","Repolarization","All"],c:3,exp:"Action potential has all three phases."},
+    {n:28,cat:'nerve',q:"Depolarization caused by:",opts:["Na⁺ entry","K⁺ entry","Cl⁻ entry","Ca²⁺ entry"],c:0,exp:"Na⁺ rushing into cell causes depolarization."},
+    {n:29,cat:'nerve',q:"Neuromuscular transmission properties:",opts:["Unidirectional","0.5 msec delay","Easily fatigued","All"],c:3,exp:"All properties are correct."},
+    {n:30,cat:'nerve',q:"Cardiac muscle resting potential:",opts:["-70 mV","-90 mV","-60 mV","-20 mV"],c:1,exp:"Cardiac muscle resting potential is -90 mV."},
+    {n:31,cat:'nerve',q:"Normal heart pacemaker:",opts:["SAN","Purkinje","AVN","None"],c:0,exp:"Sinoatrial Node is the normal pacemaker."},
+    {n:32,cat:'nerve',q:"Positive inotropic effect:",opts:["Parasympathetic","Ca²⁺ antagonists","Caffeine","Heart failure"],c:2,exp:"Caffeine increases cardiac contractility."},
+    {n:33,cat:'nerve',q:"Pneumothorax means:",opts:["Blood in pleura","Lymph in pleura","Air in pleura","None"],c:2,exp:"Pneumothorax = air in pleural cavity."},
+    {n:34,cat:'nerve',q:"Stereognosis means:",opts:["Localization","Two-point discrimination","Object recognition by touch","Texture recognition"],c:2,exp:"Stereognosis is identifying objects by touch."},
+    {n:35,cat:'nerve',q:"Extracranial headache cause:",opts:["Meningitis","Brain tumor","Otitis media","Trauma"],c:2,exp:"Otitis media is an extracranial cause."},
+    {n:36,cat:'nerve',q:"Intracranial headache cause:",opts:["Meningitis","Sinusitis","Glaucoma","Toothache"],c:0,exp:"Meningitis is an intracranial cause."},
+    {n:37,cat:'nerve',q:"Mydriasis cause:",opts:["Light","Sympathetic stimulation","Near vision","Parasympathetic"],c:1,exp:"Sympathetic stimulation causes pupil dilation."},
+    {n:38,cat:'nerve',q:"Conductive deafness:",opts:["Cochlea lesion","Auditory pathway lesion","External ear obstruction","None"],c:2,exp:"Conductive deafness involves external/middle ear problems."},
+    {n:39,cat:'nerve',q:"Light moving things on skin feel:",opts:["Pressure","Tickling","Vibration","Touch"],c:1,exp:"Tickling and itching."},
+    {n:40,cat:'nerve',q:"Types of hypoxia:",opts:["Hypoxic","Stagnant","Anemic","All"],c:3,exp:"Four types: hypoxic, stagnant, anemic, histotoxic."},
+    {n:41,cat:'digest',q:"Food moves through digestive tract by:",opts:["Gravity","Peristalsis","Cilia","Absorption"],c:1,exp:"Peristalsis moves food through GI tract."},
+    {n:42,cat:'digest',q:"Liver helps digestion by:",opts:["Making enzymes","Neutralizing acid","Producing bile","Regulating insulin"],c:2,exp:"Liver produces bile for fat digestion."},
+    {n:43,cat:'digest',q:"Best for intestinal health:",opts:["Starches","Vitamins","Fiber","Fat"],c:2,exp:"Fiber promotes intestinal health."},
+    {n:44,cat:'digest',q:"Heartburn causes:",opts:["Obesity","Lying after meals","High-fat foods","All"],c:3,exp:"All increase acid reflux risk."},
+    {n:45,cat:'digest',q:"Digestive system:",opts:["Breathing","Nerves","Food processing","Blood transport"],c:2,exp:"The digestive system processes food."},
+    {n:46,cat:'digest',q:"Bile formed in:",opts:["Kidney","Pancreas","Liver","Lung"],c:2,exp:"Bile is produced by the liver."},
+    {n:47,cat:'digest',q:"Saliva digests:",opts:["Protein","Fat","Starch","Fiber"],c:2,exp:"Salivary amylase digests starch."},
+    {n:48,cat:'digest',q:"Protein digestion begins in:",opts:["Liver","Stomach","Intestine","Pancreas"],c:1,exp:"Protein digestion begins in stomach with pepsin."},
+    {n:49,cat:'digest',q:"Gastric gland cells:",opts:["Mucus, chief, parietal","Only mucus","Only chief","Only parietal"],c:0,exp:"Gastric glands have mucus, chief, and parietal cells."},
+    {n:50,cat:'digest',q:"Carb digestion starts at:",opts:["Stomach","Intestine","Colon","Buccal cavity"],c:3,exp:"Carbohydrate digestion begins in the mouth."},
+    {n:51,cat:'senses',q:"Body temperature regulation:",opts:["Pituitary","Thalamus","Hypothalamus","Pons"],c:2,exp:"Hypothalamus regulates temperature."},
+    {n:52,cat:'senses',q:"Rapid BP control via:",opts:["Kidney","Nervous system","Capillary shift","All"],c:1,exp:"Nervous system provides rapid BP control."},
+    {n:53,cat:'senses',q:"Myopia means:",opts:["Better near than far","Better far than near","Blur at all distances","Aging focus loss"],c:0,exp:"Myopia = near-sightedness."},
+    {n:54,cat:'senses',q:"Hypermetropia:",opts:["Better near","Better far","Blur at all distances","Aging loss"],c:1,exp:"Hypermetropia = far-sightedness."},
+    {n:55,cat:'senses',q:"Astigmatism:",opts:["Better near","Better far","Irregular bending","Aging loss"],c:2,exp:"Astigmatism = irregular corneal curvature."},
+    {n:56,cat:'senses',q:"Presbyopia:",opts:["Aging near vision loss","Better near","Better far","Irregular bending"],c:0,exp:"Presbyopia = age-related loss of near focus."},
+];
+
+let currentCategory = 'all';
+let currentQuestions = [];
+let answeredCount = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let quizActive = false;
+
+// جسيمات عشوائية
+for(let i = 0; i < 50; i++) {
+    let p = document.createElement('div');
+    p.className = 'particle';
+    p.style.width = Math.random() * 6 + 2 + 'px';
+    p.style.height = p.style.width;
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = Math.random() * 15 + 10 + 's';
+    p.style.animationDelay = Math.random() * 10 + 's';
+    document.getElementById('particles').appendChild(p);
+}
+
+// أزرار التصفية
+document.querySelectorAll('.filter-btns button').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btns button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentCategory = btn.dataset.cat;
+        const filtered = currentCategory === 'all' ? ALL : ALL.filter(q => q.cat === currentCategory);
+        document.getElementById('totalQ').textContent = filtered.length;
+    });
+});
+
+// تحميل العدد الأولي
+document.getElementById('totalQ').textContent = ALL.length;
+
+function startQuiz() {
+    currentQuestions = currentCategory === 'all' ? [...ALL] : ALL.filter(q => q.cat === currentCategory);
+    answeredCount = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    quizActive = true;
+    
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('quizWrapper').style.display = 'block';
+    document.getElementById('navbar').style.display = 'block';
+    document.getElementById('resultsScreen').style.display = 'none';
+    
+    updateStats();
+    renderQuestions();
+}
+
+function renderQuestions() {
+    const container = document.getElementById('questionsContainer');
+    container.innerHTML = '';
+    
+    let lastCat = '';
+    currentQuestions.forEach((q, idx) => {
+        if (lastCat !== q.cat) {
+            const header = document.createElement('div');
+            header.className = 'section-header';
+            header.innerHTML = `<div class="section-line"></div><div class="section-title">${CATS[q.cat]}</div><div class="section-line right"></div>`;
+            container.appendChild(header);
+            lastCat = q.cat;
+        }
+        
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `q-${idx}`;
+        card.dataset.index = idx;
+        
+        const optsHtml = q.opts.map((opt, optIdx) => 
+            `<div class="option" data-letter="${L[optIdx]}" data-opt="${optIdx}" onclick="selectAnswer(${idx}, ${optIdx})">${opt}</div>`
+        ).join('');
+        
+        card.innerHTML = `
+            <div class="q-header">
+                <div class="q-num">${q.n}</div>
+                <div class="q-cat">${CATS[q.cat]}</div>
+            </div>
+            <div class="q-text">${q.q}</div>
+            <div class="options" id="opts-${idx}">${optsHtml}</div>
+            <div class="feedback" id="fb-${idx}"></div>
+        `;
+        container.appendChild(card);
+    });
+    
+    document.getElementById('submitBtn').disabled = true;
+}
+
+function selectAnswer(qIdx, optIdx) {
+    if (!quizActive) return;
+    const q = currentQuestions[qIdx];
+    const optsDiv = document.getElementById(`opts-${qIdx}`);
+    if (optsDiv.querySelector('.correct,.wrong')) return;
+    
+    const isCorrect = optIdx === q.c;
+    const allOpts = optsDiv.querySelectorAll('.option');
+    
+    allOpts.forEach(opt => {
+        opt.style.pointerEvents = 'none';
+        if (parseInt(opt.dataset.opt) === q.c) {
+            opt.classList.add('correct');
+        } else if (parseInt(opt.dataset.opt) === optIdx && !isCorrect) {
+            opt.classList.add('wrong');
+        }
+    });
+    
+    const fb = document.getElementById(`fb-${qIdx}`);
+    fb.style.display = 'block';
+    fb.className = `feedback ${isCorrect ? 'correct' : 'wrong'}`;
+    fb.innerHTML = isCorrect ? `✅ صحيح! ${q.exp}` : `❌ خطأ! الإجابة الصحيحة: ${q.opts[q.c]}<br>📖 ${q.exp}`;
+    
+    document.getElementById(`q-${qIdx}`).classList.add(isCorrect ? 'correct' : 'wrong');
+    
+    if (isCorrect) correctCount++;
+    else wrongCount++;
+    answeredCount++;
+    
+    updateStats();
+    
+    if (answeredCount === currentQuestions.length) {
+        document.getElementById('submitBtn').disabled = false;
+    }
+}
+
+function updateStats() {
+    const total = currentQuestions.length;
+    const percent = answeredCount > 0 ? Math.round(correctCount / answeredCount * 100) : 0;
+    document.getElementById('statAnswered').textContent = `${answeredCount}/${total}`;
+    document.getElementById('statCorrect').textContent = `✅ ${correctCount}`;
+    document.getElementById('statWrong').textContent = `❌ ${wrongCount}`;
+    document.getElementById('statPercent').textContent = `📊 ${percent}%`;
+    const progress = total > 0 ? (answeredCount / total * 100) : 0;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+}
+
+function showResults() {
+    quizActive = false;
+    const total = currentQuestions.length;
+    const percent = Math.round(correctCount / total * 100);
+    
+    document.getElementById('finalScore').textContent = correctCount;
+    document.getElementById('finalTotal').textContent = total;
+    document.getElementById('resultCorrect').textContent = correctCount;
+    document.getElementById('resultWrong').textContent = wrongCount;
+    document.getElementById('resultPercent').textContent = `${percent}%`;
+    
+    const circumference = 377;
+    const offset = circumference - (percent / 100 * circumference);
+    document.getElementById('scoreFill').style.strokeDashoffset = offset;
+    
+    let msg = '';
+    if (percent >= 90) msg = '🌟 ممتاز! مستوى متميز في الفيزيولوجيا!';
+    else if (percent >= 75) msg = '👏 جيد جداً! مجهود رائع، استمر!';
+    else if (percent >= 60) msg = '👍 جيد! راجع الإجابات الخاطئة';
+    else msg = '📚 تحتاج مراجعة أكثر — أنت قادر على الأفضل!';
+    document.getElementById('resultMessage').innerHTML = msg;
+    
+    const reviewDiv = document.getElementById('reviewArea');
+    reviewDiv.innerHTML = '<h3>📋 مراجعة الإجابات الخاطئة</h3>';
+    let hasWrong = false;
+    
+    currentQuestions.forEach((q, idx) => {
+        const card = document.getElementById(`q-${idx}`);
+        if (card && card.classList.contains('wrong')) {
+            hasWrong = true;
+            reviewDiv.innerHTML += `
+                <div class="review-item">
+                    <strong>❌ سؤال ${q.n}:</strong> ${q.q}<br>
+                    <strong>✅ الإجابة الصحيحة:</strong> ${q.opts[q.c]}<br>
+                    <span style="font-size:0.8rem; opacity:0.8;">📖 ${q.exp}</span>
+                </div>
+            `;
+        }
+    });
+    
+    if (!hasWrong) {
+        reviewDiv.innerHTML = '<div style="text-align:center;color:#10b981;padding:20px;">🎉 كل إجاباتك صحيحة! مستوى ممتاز!</div>';
+    }
+    
+    document.getElementById('quizWrapper').style.display = 'none';
+    document.getElementById('resultsScreen').style.display = 'block';
+}
+
+function restartQuiz() {
+    startQuiz();
+}
+
+function goHome() {
+    quizActive = false;
+    document.getElementById('quizWrapper').style.display = 'none';
+    document.getElementById('navbar').style.display = 'none';
+    document.getElementById('resultsScreen').style.display = 'none';
+    document.getElementById('startScreen').style.display = 'flex';
+    window.scrollTo(0, 0);
+}
+
+document.getElementById('startBtn').addEventListener('click', startQuiz);
+document.getElementById('submitBtn').addEventListener('click', showResults);
+</script>
+</body>
+</html>
