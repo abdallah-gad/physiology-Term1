@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A.D.Gad | Physiology Final Exam Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --black: #000000;
+    --gray: #b3b3b3;
+    --red: #ff0000;
+    --gold: gold;
+    --red-dark: #cc0000;
+    --gold-dark: #daa520;
+    --bg-gradient: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2a2a2a 100%);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding-bottom: 80px;
+}
+
+/* خلفية متحركة */
+.bg-orbs {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: drift 12s ease-in-out infinite alternate;
+}
+
+.orb1 {
+    width: 500px;
+    height: 500px;
+    background: var(--red);
+    top: -100px;
+    left: -100px;
+}
+
+.orb2 {
+    width: 400px;
+    height: 400px;
+    background: var(--gold);
+    top: 40%;
+    right: -80px;
+    animation-delay: 3s;
+}
+
+.orb3 {
+    width: 300px;
+    height: 300px;
+    background: var(--red-dark);
+    bottom: 10%;
+    left: 20%;
+    animation-delay: 6s;
+}
+
+@keyframes drift {
+    from { transform: translate(0,0) scale(1); }
+    to { transform: translate(30px,40px) scale(1.08); }
+}
+
+/* شريط التقدم العلوي */
+.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 0, 0, 0.3);
+    padding: 10px 20px;
+}
+
+.sticky-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.pill {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pill-q {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--gray);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.pill-c {
+    background: rgba(0, 255, 0, 0.15);
+    color: #4ade80;
+    border: 1px solid #22c55e;
+}
+
+.pill-w {
+    background: rgba(255, 0, 0, 0.15);
+    color: #f87171;
+    border: 1px solid var(--red);
+}
+
+.pill-p {
+    background: rgba(255, 215, 0, 0.15);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+}
+
+.prog-wrap {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    height: 6px;
+    min-width: 60px;
+    overflow: hidden;
+}
+
+.prog-fill {
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    height: 100%;
+    border-radius: 8px;
+    transition: width 0.5s;
+}
+
+/* شاشة البداية */
+#startScreen {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 60px auto 0;
+    padding: 20px;
+}
+
+.start-card {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 0, 0, 0.4);
+    border-radius: 24px;
+    padding: 44px 40px;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.logo-img {
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    animation: pulse-icon 3s ease-in-out infinite;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+@keyframes pulse-icon {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255, 0, 0, 0.4)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.6)); }
+}
+
+.start-card h1 {
+    font-family: 'Cairo', sans-serif;
+    font-size: 2.2em;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--red), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--gold);
+    font-size: 0.95em;
+    margin-bottom: 4px;
+    opacity: 0.85;
+}
+
+.by-line {
+    text-align: center;
+    color: var(--gray);
+    font-size: 0.9em;
+    margin-bottom: 26px;
+    letter-spacing: 0.04em;
+}
+
+.by-line span {
+    color: var(--red);
+    font-weight: 700;
+}
+
+.section-label {
+    color: var(--gray);
+    font-size: 0.8em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+}
+
+.filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.filter-btn {
+    padding: 7px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 500;
+    transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--gray);
+    font-family: 'Cairo', sans-serif;
+}
+
+.filter-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.5), rgba(255, 215, 0, 0.2));
+    border-color: var(--red);
+    color: var(--gold);
+    box-shadow: 0 0 14px rgba(255, 0, 0, 0.3);
+}
+
+.start-info {
+    color: var(--gray);
+    font-size: 0.9em;
+    text-align: center;
+    margin-bottom: 22px;
+}
+
+.start-info span {
+    color: var(--gold);
+    font-weight: 700;
+}
+
+.btn-start {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--red), var(--red-dark));
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 8px 30px rgba(255, 0, 0, 0.4);
+}
+
+.btn-start:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(255, 215, 0, 0.4);
+    background: linear-gradient(135deg, var(--red-dark), var(--gold));
+}
+
+/* واجهة الاختبار */
+#quizWrapper {
+    display: none;
+    padding-top: 75px;
+    position: relative;
+    z-index: 1;
+}
+
+.sec-hdr {
+    max-width: 860px;
+    margin: 30px auto 4px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.sec-hdr .line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 0, 0, 0.5), transparent);
+}
+
+.sec-hdr .line.r {
+    background: linear-gradient(270deg, rgba(255, 0, 0, 0.5), transparent);
+}
+
+.sec-hdr .lbl {
+    color: var(--gold);
+    font-size: 0.78em;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid rgba(255, 0, 0, 0.4);
+    padding: 4px 14px;
+    border-radius: 20px;
+}
+
+.q-card {
+    max-width: 860px;
+    margin: 16px auto;
+    padding: 26px 30px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
+    border-right: 5px solid rgba(255, 0, 0, 0.5);
+    transition: border-color 0.35s;
+    animation: slideIn 0.3s ease both;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.q-card.answered-correct {
+    border-right-color: #22c55e;
+}
+
+.q-card.answered-wrong {
+    border-right-color: var(--red);
+}
+
+.q-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.q-num {
+    background: linear-gradient(135deg, var(--red), var(--red-dark));
+    color: #fff;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85em;
+    flex-shrink: 0;
+}
+
+.cat-tag {
+    background: linear-gradient(135deg, var(--red), var(--red-dark));
+    color: #fff;
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.72em;
+    font-weight: 600;
+}
+
+.q-text {
+    font-size: 1.05em;
+    font-weight: 600;
+    color: #0f172a;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.opts {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.opt {
+    padding: 12px 18px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.95em;
+    text-align: right;
+    background: #fff;
+    color: #334155;
+    transition: all 0.18s;
+    font-family: 'Cairo', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.opt::before {
+    content: attr(data-letter);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    border: 2px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: 700;
+    color: #64748b;
+    flex-shrink: 0;
+    transition: all 0.18s;
+}
+
+.opt:hover:not(:disabled) {
+    border-color: var(--red);
+    background: #fff5f5;
+    transform: translateX(-5px);
+}
+
+.opt:hover:not(:disabled)::before {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+}
+
+.opt.correct {
+    border-color: #22c55e;
+    background: #f0fdf4;
+    color: #065f46;
+    font-weight: 600;
+}
+
+.opt.correct::before {
+    background: #22c55e;
+    border-color: #22c55e;
+    color: #fff;
+}
+
+.opt.wrong {
+    border-color: var(--red);
+    background: #fef2f2;
+    color: #7f1d1d;
+}
+
+.opt.wrong::before {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+}
+
+.opt:disabled {
+    cursor: default;
+}
+
+.q-feedback {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 0.88em;
+    line-height: 1.6;
+    display: none;
+}
+
+.q-feedback.correct {
+    background: #f0fdf4;
+    border-right: 4px solid #22c55e;
+    color: #065f46;
+}
+
+.q-feedback.wrong {
+    background: #fef2f2;
+    border-right: 4px solid var(--red);
+    color: #7f1d1d;
+}
+
+.submit-wrap {
+    max-width: 860px;
+    margin: 26px auto;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.btn-submit {
+    padding: 16px 70px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--red), var(--red-dark));
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 8px 30px rgba(255, 0, 0, 0.4);
+}
+
+.btn-submit:hover {
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, var(--red-dark), var(--gold));
+}
+
+.btn-submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* نتيجة الاختبار */
+#resultsBox {
+    max-width: 860px;
+    margin: 24px auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 24px;
+    text-align: center;
+    display: none;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+}
+
+.results-logo {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+}
+
+#resultsBox h2 {
+    font-family: 'Cairo', sans-serif;
+    color: var(--red);
+    font-size: 2em;
+    margin-bottom: 8px;
+}
+
+.score-ring {
+    width: 160px;
+    height: 160px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.score-ring svg {
+    transform: rotate(-90deg);
+}
+
+.ring-bg {
+    fill: none;
+    stroke: #e2e8f0;
+    stroke-width: 12;
+}
+
+.ring-fg {
+    fill: none;
+    stroke: url(#rg);
+    stroke-width: 12;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.score-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.score-center .big {
+    font-size: 2.4em;
+    font-weight: 900;
+    color: var(--red);
+    font-family: 'Cairo', sans-serif;
+}
+
+.score-center .small {
+    font-size: 0.8em;
+    color: #64748b;
+}
+
+.result-msg {
+    font-size: 1.05em;
+    color: #475569;
+    margin: 10px 0 24px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    border-radius: 16px;
+    padding: 16px 10px;
+}
+
+.stat-card.c {
+    background: #f0fdf4;
+    border: 2px solid #22c55e;
+}
+
+.stat-card.w {
+    background: #fef2f2;
+    border: 2px solid var(--red);
+}
+
+.stat-card.p {
+    background: #fffbeb;
+    border: 2px solid var(--gold);
+}
+
+.stat-card .num {
+    font-size: 2em;
+    font-weight: 900;
+    font-family: 'Cairo', sans-serif;
+}
+
+.stat-card.c .num {
+    color: #22c55e;
+}
+
+.stat-card.w .num {
+    color: var(--red);
+}
+
+.stat-card.p .num {
+    color: #f59e0b;
+}
+
+.stat-card .lbl {
+    font-size: 0.8em;
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.btn-re, .btn-home {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.05em;
+    font-weight: 700;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: all 0.2s;
+}
+
+.btn-re {
+    background: linear-gradient(135deg, var(--red), var(--red-dark));
+    color: #fff;
+}
+
+.btn-home {
+    background: #f1f5f9;
+    color: #475569;
+}
+
+.btn-re:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, var(--red-dark), var(--gold));
+}
+
+.btn-home:hover {
+    background: #e2e8f0;
+}
+
+.review-section {
+    text-align: right;
+    margin-top: 24px;
+}
+
+.review-section h3 {
+    color: var(--red);
+    font-size: 1.1em;
+    margin-bottom: 14px;
+    font-family: 'Cairo', sans-serif;
+}
+
+.rev-item {
+    padding: 14px 16px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    font-size: 0.88em;
+    line-height: 1.6;
+}
+
+.rev-item.wrong {
+    background: #fef2f2;
+    border-right: 4px solid var(--red);
+}
+
+.rev-item .rt {
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: #1e293b;
+}
+
+.rev-item .exp {
+    color: #64748b;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+@media (max-width: 600px) {
+    .start-card {
+        padding: 28px 20px;
+    }
+    .start-card h1 {
+        font-size: 1.7em;
+    }
+    .q-card {
+        padding: 18px 14px;
+        margin: 12px 10px;
+    }
+    #resultsBox {
+        padding: 24px 16px;
+    }
+    .logo-img {
+        width: 70px;
+        height: 70px;
+    }
+    .results-logo {
+        width: 50px;
+        height: 50px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+</div>
+
+<div class="sticky" id="stickyBar" style="display:none">
+    <div class="sticky-inner">
+        <div class="pill pill-q" id="sNum">0/0</div>
+        <div class="pill pill-c" id="sC">✅ 0</div>
+        <div class="pill pill-w" id="sW">❌ 0</div>
+        <div class="pill pill-p" id="sP">📊 0%</div>
+        <div class="prog-wrap"><div class="prog-fill" id="sFill" style="width:0%"></div></div>
+    </div>
+</div>
+
+<div id="startScreen">
+    <div class="start-card">
+        <img src="images/logo.png" alt="A.D.Gad Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/100?text=ADGad'">
+        <h1>A.D.Gad | Physiology Quiz</h1>
+        <p class="subtitle">Cell · Blood · Nervous System · Digestion · Special Senses</p>
+        <p class="by-line"><span>𝑩𝒀 𝑬𝑵𝑮. 𝑨𝑩𝑫𝑨𝑳𝑳𝑨𝑯 𝑮𝑨𝑫</span><br><span style="font-size:0.8rem;">A.D.Gad Electronics & Software</span></p>
+        <p class="section-label">اختر الموضوع</p>
+        <div class="filter-group">
+            <button class="filter-btn active" onclick="selCat('all',this)">📚 الكل</button>
+            <button class="filter-btn" onclick="selCat('cell',this)">🔬 Cell Physiology</button>
+            <button class="filter-btn" onclick="selCat('blood',this)">🩸 Blood</button>
+            <button class="filter-btn" onclick="selCat('nerve',this)">⚡ Nervous System</button>
+            <button class="filter-btn" onclick="selCat('digest',this)">🫃 Digestion</button>
+            <button class="filter-btn" onclick="selCat('senses',this)">👁️ Special Senses & CVS</button>
+        </div>
+        <p class="start-info">عدد أسئلة MCQ: <span id="qCount">0</span></p>
+        <button class="btn-start" onclick="startQuiz()">▶ ابدأ الاختبار</button>
+    </div>
+</div>
+
+<div id="quizWrapper">
+    <div id="cardsContainer"></div>
+    <div class="submit-wrap">
+        <button class="btn-submit" id="submitBtn" onclick="showResults()" disabled>🎯 عرض النتيجة</button>
+    </div>
+    <div id="resultsBox">
+        <img src="images/logo.png" alt="A.D.Gad Logo" class="results-logo" onerror="this.src='https://via.placeholder.com/70?text=ADGad'">
+        <h2>🎉 انتهى الاختبار!</h2>
+        <div class="score-ring">
+            <svg width="160" height="160" viewBox="0 0 160 160">
+                <defs><linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ff0000"/><stop offset="100%" stop-color="gold"/></linearGradient></defs>
+                <circle class="ring-bg" cx="80" cy="80" r="64"/>
+                <circle class="ring-fg" id="ringFg" cx="80" cy="80" r="64" stroke-dasharray="402" stroke-dashoffset="402"/>
+            </svg>
+            <div class="score-center"><span class="big" id="rScore">0</span><span class="small">من <span id="rTotal">0</span></span></div>
+        </div>
+        <div class="result-msg" id="rMsg"></div>
+        <div class="stats-grid">
+            <div class="stat-card c"><div class="num" id="rC">0</div><div class="lbl">✅ صح</div></div>
+            <div class="stat-card w"><div class="num" id="rW">0</div><div class="lbl">❌ غلط</div></div>
+            <div class="stat-card p"><div class="num" id="rP">0%</div><div class="lbl">📊 النسبة</div></div>
+        </div>
+        <button class="btn-re" onclick="startQuiz()">🔄 إعادة الاختبار</button>
+        <button class="btn-home" onclick="goHome()">🏠 الرئيسية</button>
+        <div class="review-section" id="reviewDiv"></div>
+    </div>
+</div>
+
+<script>
+const L = ['أ', 'ب', 'ج', 'د'];
+const CATS = {
+    cell: '🔬 Cell Physiology',
+    blood: '🩸 Blood',
+    nerve: '⚡ Nervous System',
+    digest: '🫃 Digestion',
+    senses: '👁️ Special Senses & CVS'
+};
+const ORDER = ['cell', 'blood', 'nerve', 'digest', 'senses'];
+
+const ALL = [
+    // Cell Physiology - الأسئلة كما هي
+    {n:1,cat:'cell',q:"The function of nucleus of the cell is:",opts:["Contains digestive enzymes","Controls cell activities and cell division","Generation of energy","Site of protein synthesis"],c:1,exp:"The nucleus controls cell activities and cell division — it contains the genetic material (DNA)."},
+    {n:2,cat:'cell',q:"Which of the following can dissolve through cell membrane?",opts:["Na","Cl","O₂","None of the above"],c:2,exp:"O₂ is a small non-polar gas molecule — it can diffuse freely through the lipid bilayer of the cell membrane."},
+    {n:3,cat:'cell',q:"In facilitated diffusion:",opts:["Passive (needs no energy)","From high concentration to low concentration of water","Needs carrier","All of the above"],c:3,exp:"Facilitated diffusion is passive (no ATP), moves solutes from high to low concentration, and requires a carrier protein — so all of the above are correct."},
+    {n:4,cat:'cell',q:"In active transport:",opts:["Occurs against concentration gradient (from low to high concentration)","Needs carrier","Energy (ATP) is used","All of the above"],c:3,exp:"Active transport moves substances against their concentration gradient, requires a carrier protein, and uses ATP energy — all of the above."},
+    {n:5,cat:'cell',q:"Most abundant plasma protein is:",opts:["Albumin","Globulin","Fibrinogen","None of the above"],c:0,exp:"Albumin is the most abundant plasma protein (~60% of total plasma protein). It maintains oncotic pressure and acts as a carrier."},
+    // Blood
+    {n:6,cat:'blood',q:"Life span of RBCs:",opts:["90 days","40 days","120 days","60 days"],c:2,exp:"Red blood cells (erythrocytes) live for approximately 120 days before being broken down by the spleen and liver."},
+    {n:7,cat:'blood',q:"The hormone erythropoietin stimulates red blood cell production in the red bone marrow. Where in the body is erythropoietin produced?",opts:["Spleen","Liver","Kidney","Thyroid"],c:2,exp:"Erythropoietin (EPO) is produced mainly by the kidneys (peritubular interstitial cells) in response to low oxygen levels."},
+    {n:8,cat:'blood',q:"Which of the following statements about erythrocytes is correct?",opts:["They fight infection","Non nucleated","Produced in spleen","Clot formation"],c:1,exp:"Mature erythrocytes are non-nucleated (they lose their nucleus during maturation) — this allows more space for hemoglobin."},
+    {n:9,cat:'blood',q:"The formation of a blood clot is known as which of the following?",opts:["Coagulation","Chemotaxis","Leucopoiesis","Erythropoiesis"],c:0,exp:"Coagulation is the process by which blood changes from a liquid to a gel (clot), involving a cascade of clotting factors."},
+    {n:10,cat:'blood',q:"Which of the following is the function of white blood cells?",opts:["Transport oxygen","Maintain homeostasis","Produce haemoglobin","Defend against infection"],c:3,exp:"White blood cells (leukocytes) are the primary cells of the immune system — their main function is to defend against infection and foreign substances."},
+    {n:11,cat:'blood',q:"Vitamin B12:",opts:["Essential for DNA synthesis, cell division & maturation of cells (RBCs)","Helps formation of myelin sheath of nerves","Its deficiency gives neurological manifestation","All of the above"],c:3,exp:"Vitamin B12 is essential for DNA synthesis, RBC maturation, and myelin sheath formation. Deficiency causes megaloblastic anemia and neurological symptoms."},
+    {n:12,cat:'blood',q:"What happens when a person has anemia?",opts:["The body produces too much iron","The blood does not have enough red blood cells","The blood becomes thick","Too many white blood cells are produced"],c:1,exp:"Anemia is defined as a deficiency of red blood cells or hemoglobin in the blood, reducing oxygen-carrying capacity."},
+    {n:13,cat:'blood',q:"What is the most common cause of anemia?",opts:["Too little sleep","Too much sugar","Too little iron in the blood","Exposure to X-ray radiation"],c:2,exp:"Iron-deficiency anemia is the most common type worldwide — iron is essential for hemoglobin synthesis."},
+    {n:14,cat:'blood',q:"Which of these groups is the most likely to have anemia?",opts:["Men","Women","Teenagers","Older adults"],c:2,exp:"Teenagers (especially teenage girls) are most susceptible due to rapid growth, menstruation, and often inadequate dietary iron."},
+    {n:15,cat:'blood',q:"How does anemia affect the body?",opts:["The blood doesn't deliver enough oxygen to the body","Blood becomes thin","Tissues retain fluids","None of the above"],c:0,exp:"Anemia reduces the oxygen-carrying capacity of blood, so tissues and organs receive insufficient oxygen — causing fatigue, pallor, and shortness of breath."},
+    {n:16,cat:'blood',q:"A lack of which of these will result in abnormally large red blood cells and megaloblastic anemia?",opts:["Oxygen","Vitamin C","Vitamin B-12 and folic acid","Carbon dioxide"],c:2,exp:"Deficiency of Vitamin B-12 and/or folic acid impairs DNA synthesis, causing large, immature RBCs — megaloblastic anemia."},
+    {n:17,cat:'blood',q:"Which of these are signs of anemia?",opts:["Pale gums","Dark circles under the eyes","Bleeding","All of the above"],c:3,exp:"Signs of anemia include pale gums (reduced hemoglobin), dark circles (poor oxygenation), and sometimes bleeding as an underlying cause."},
+    {n:18,cat:'blood',q:"How does iron-deficiency anemia affect teenagers?",opts:["More trouble with written expression","Can't concentrate","Aggravates hyperactivity","A and B"],c:3,exp:"Iron-deficiency anemia in teenagers causes cognitive impairment — specifically trouble with written expression and concentration difficulties (A and B)."},
+    {n:19,cat:'blood',q:"Term polycythemia means abnormal increase in:",opts:["Red blood cells","White blood cells","Platelet","None of the above"],c:0,exp:"Polycythemia means an abnormal increase in the number of red blood cells (erythrocytes), increasing blood viscosity."},
+    // Nervous System
+    {n:20,cat:'nerve',q:"________ are the neurons carrying impulses away from the central nervous system:",opts:["Efferent nerves","Afferent nerves","Extensors","Sensory nerves"],c:0,exp:"Efferent nerves carry impulses AWAY from the CNS to effectors (muscles/glands). Afferent nerves carry signals TOWARD the CNS."},
+    {n:21,cat:'nerve',q:"What is the basic unit of the nervous system?",opts:["Glial cell","Meninges","Neuron","Cerebrospinal fluid"],c:2,exp:"The neuron is the basic structural and functional unit of the nervous system — it transmits electrical and chemical signals."},
+    {n:22,cat:'nerve',q:"The neuron cell is made up of which of the following parts?",opts:["Axon","Dendrite","Nucleus","All of the Above"],c:3,exp:"A neuron consists of a cell body (containing the nucleus), dendrites (receiving signals), and an axon (transmitting signals) — all of the above."},
+    {n:23,cat:'nerve',q:"How do neurons communicate with one another?",opts:["Electrically","Chemically","Through weak, radio-wave-like impulses","A and B"],c:3,exp:"Neurons communicate both electrically (within the cell via action potentials) and chemically (between cells via neurotransmitters at synapses)."},
+    {n:24,cat:'nerve',q:"Reflex arc formed of:",opts:["Brain, muscle, spinal cord","Receptor, spinal cord, brain and muscle, glands","Muscle, brain, spinal cord","Muscle, receptor, spinal cord"],c:1,exp:"A reflex arc consists of: receptor → afferent neuron → spinal cord/brain → efferent neuron → muscle/gland (effector)."},
+    {n:25,cat:'nerve',q:"The opening of axon membrane voltage-gated potassium channels is responsible for which part of the action potential?",opts:["Depolarisation of the membrane","Repolarisation of the membrane","Contraction of the post synaptic muscle fibre","Signalling vesicular release of neurotransmitters"],c:1,exp:"K⁺ channels open during repolarisation — K⁺ flows OUT of the cell, restoring the negative resting membrane potential."},
+    {n:26,cat:'nerve',q:"What is largely responsible for the negative resting membrane potential (around -70 mV) in a neuron?",opts:["Schwann cells","Is due to unequal distribution of ions on both sides of the cell membrane. There are more Na+ ions in the extracellular fluid and more K + ions in the intracellular fluid","The action potential","None of above"],c:1,exp:"The resting membrane potential (-70 mV) results from unequal ion distribution: high Na⁺ extracellularly and high K⁺ intracellularly, maintained by the Na⁺/K⁺ pump."},
+    {n:27,cat:'nerve',q:"Action potential phases:",opts:["Latent period","Depolarization phase","Repolarization phase","All of the above"],c:3,exp:"The action potential has three main phases: latent period (before threshold), depolarization (Na⁺ rush in), and repolarization (K⁺ flows out)."},
+    {n:28,cat:'nerve',q:"During depolarization phase of action potential:",opts:["is Produced by Na⁺ entry through voltage-gated Na⁺ channels","Inactivation of Na⁺ channels","Activation of K⁺ channels → K⁺ outflow","None of the above"],c:0,exp:"Depolarization occurs when voltage-gated Na⁺ channels open and Na⁺ rushes INTO the cell, making the inside more positive."},
+    {n:29,cat:'nerve',q:"From properties of Neuromuscular Transmission:",opts:["It is unidirectional","There is a delay of about 0.5 msec","Easily fatigued","All of the above"],c:3,exp:"Neuromuscular transmission is: unidirectional (nerve → muscle), has a synaptic delay (~0.5 ms), and the junction can become fatigued with repeated stimulation."},
+    {n:30,cat:'nerve',q:"Resting membrane potential in cardiac muscle is:",opts:["-70 mV","-90 mV","-60 mV","-20 mV"],c:1,exp:"The resting membrane potential of cardiac muscle cells is approximately -90 mV, more negative than skeletal muscle or neurons."},
+    {n:31,cat:'nerve',q:"The normal pacemaker in heart is:",opts:["SAN","Purkinje fibers","AVN","None of the above"],c:0,exp:"The Sinoatrial Node (SAN) in the right atrium is the normal pacemaker of the heart — it generates the fastest intrinsic rate (~60–100 bpm)."},
+    {n:32,cat:'nerve',q:"Which of the following have positive inotropic effect?",opts:["Parasympathetic or Acetylcholine","Calcium antagonists & anesthetics","Caffeine","Heart failure"],c:2,exp:"Caffeine has a positive inotropic effect — it increases the force of cardiac contraction. Parasympathetic stimulation and Ca²⁺ antagonists reduce contractility."},
+    {n:33,cat:'nerve',q:"What's mean by pneumothorax?",opts:["Blood in pleural cavity","Lymph in pleural cavity","Air in pleural cavity","None of the above"],c:2,exp:"Pneumothorax = air in the pleural cavity. Haemothorax = blood. Chylothorax = lymph in the pleural space."},
+    {n:34,cat:'nerve',q:"The term Stereognosis means:",opts:["Localization of a point touched without looking","Differentiation between two points applied to the skin without looking","ability of the person to know an object from its shape, form and texture provided he is closing his eyes","Ability to know texture of different materials with eyes closed"],c:2,exp:"Stereognosis is the ability to identify an object by touch alone (shape, form, texture) without visual input — it tests parietal lobe function."},
+    {n:35,cat:'nerve',q:"Which of the following is an extracranial cause of headache?",opts:["Meningitis: due to inflammation of meninges","Meningeal trauma: due to meningeal irritation","Brain tumors: due to irritation of meninges","Otitis media"],c:3,exp:"Otitis media (middle ear infection) is an extracranial cause of headache. Meningitis, meningeal trauma, and brain tumors are intracranial causes."},
+    {n:36,cat:'nerve',q:"Which of the following is an intracranial cause of headache?",opts:["Meningitis","Sinusitis, Allergic rhinitis","Errors of eye refraction, Glaucoma","Dental abscess, Toothache"],c:0,exp:"Meningitis is an intracranial cause (inflammation of meninges inside the skull). Sinusitis, eye refraction errors, and dental causes are extracranial."},
+    {n:37,cat:'nerve',q:"From the following which of them is a cause of mydriasis:",opts:["Light exposure","Sympathetic stimulation","Near vision e.g during reading","Parasympathetic stimulation"],c:1,exp:"Mydriasis (pupil dilation) is caused by sympathetic stimulation. Light, near vision, and parasympathetic stimulation cause miosis (pupil constriction)."},
+    {n:38,cat:'nerve',q:"In conductive deafness:",opts:["Lesion of cochlea","Lesion in auditory nervous pathway","Obstruction of external ear by wax or foreign body, middle ear disease","None of above"],c:2,exp:"Conductive deafness is caused by problems in the external or middle ear (wax, foreign body, ossicle damage). Sensorineural deafness involves cochlea/auditory nerve."},
+    {n:39,cat:'nerve',q:"Ability to feel light moving things on the skin:",opts:["Pressure","Tickling and itching","Vibration","Touch"],c:1,exp:"Tickling and itching."},
+    {n:40,cat:'nerve',q:"Types of hypoxia:",opts:["Hypoxic","Stagnant","Anemic","All of the above"],c:3,exp:"The 4 types of hypoxia are: Hypoxic (low PaO₂), Stagnant/circulatory (poor blood flow), Anemic (low hemoglobin), and Histotoxic (cells can't use O₂)."},
+    // Digestion
+    {n:41,cat:'digest',q:"How does food move through your digestive tract?",opts:["By gravity","By wavelike muscle contractions","By cilia","By chemical absorption"],c:1,exp:"Food moves through the digestive tract by peristalsis — coordinated wavelike contractions of smooth muscle in the GI tract wall."},
+    {n:42,cat:'digest',q:"What does the liver do to help digestion?",opts:["Makes important enzymes","Neutralizes stomach acid","Produces bile","Regulates insulin"],c:2,exp:"The liver produces bile, which is stored in the gallbladder and released into the duodenum to emulsify fats for digestion."},
+    {n:43,cat:'digest',q:"Which of these best maintains intestinal health?",opts:["Starches","Vitamins","Fiber","Fat"],c:2,exp:"Dietary fiber promotes intestinal health by stimulating peristalsis, feeding beneficial gut bacteria, and preventing constipation."},
+    {n:44,cat:'digest',q:"Which of these can cause heartburn?",opts:["Being overweight","Lying down soon after eating a large meal","Eating high-fat foods","All of the above"],c:3,exp:"Heartburn (acid reflux) can be caused by obesity (increased abdominal pressure), lying down after meals, and high-fat foods — all increase reflux risk."},
+    {n:45,cat:'digest',q:"What is the digestive system?",opts:["The body's breathing system","The body's system of nerves","The body's food-processing system","The body's blood-transporting system"],c:2,exp:"The digestive system is the body's food-processing system — it breaks down food into nutrients that can be absorbed and used by the body."},
+    {n:46,cat:'digest',q:"Bile juice is formed in the:",opts:["Kidney","Pancreas","Liver","Lung"],c:2,exp:"Bile is produced by hepatocytes in the liver, stored in the gallbladder, and released into the duodenum to aid fat digestion."},
+    {n:47,cat:'digest',q:"Saliva helps in digestion of:",opts:["Protein","Fat","Starch","Fiber"],c:2,exp:"Saliva contains salivary amylase (ptyalin) which begins the digestion of starch (carbohydrates) in the mouth."},
+    {n:48,cat:'digest',q:"Digestion of protein begins in:",opts:["Liver","Stomach","Intestine","Pancreas"],c:1,exp:"Protein digestion begins in the stomach via pepsin (activated from pepsinogen by HCl) and the acidic environment."},
+    {n:49,cat:'digest',q:"Which of the following types of cell is present in gastric glands?",opts:["Mucus neck cells, peptic or chief cells and parietal or oxyntic cells","Mucus cells only","Peptic cells only","Parietal cells only"],c:0,exp:"Gastric glands contain: mucus neck cells (mucus), chief/peptic cells (pepsinogen), and parietal/oxyntic cells (HCl and intrinsic factor)."},
+    {n:50,cat:'digest',q:"Digestion of carbohydrates starts at:",opts:["Stomach","Small intestine","Large intestine","Buccal cavity"],c:3,exp:"Carbohydrate digestion begins in the buccal cavity (mouth) by salivary amylase acting on starch."},
+    // Special Senses & CVS
+    {n:51,cat:'senses',q:"The part of the brain that regulates body temperature is:",opts:["Pituitary","Thalamus","Hypothalamus","Pons"],c:2,exp:"The hypothalamus is the thermostat of the body — it regulates body temperature by controlling sweating, shivering, and vasoconstriction/dilation."},
+    {n:52,cat:'senses',q:"Rapid control of blood pressure is done through:",opts:["Kidney and hormonal system","Nervous system","Capillary fluid shift","All of the above"],c:1,exp:"Rapid blood pressure control (seconds) is via the nervous system (baroreceptor reflex). Hormonal and renal mechanisms act more slowly (minutes to hours)."},
+    {n:53,cat:'senses',q:"Myopia means:",opts:["The eye sees better near than at a distance","The eye sees better at distance than at near","Irregular bending of light rays causing blurring at all distances","Loss of ability to focus on near objects in aging"],c:0,exp:"Myopia (near-sightedness) — the eye can see near objects clearly but distant objects are blurry. The eyeball is too long or cornea too curved."},
+    {n:54,cat:'senses',q:"Hypermetropia:",opts:["The eye sees better near than at a distance","The eye sees better at distance than at near","Irregular bending of light rays causing blurring at all distances","Loss of ability to focus on near objects in aging"],c:1,exp:"Hypermetropia (far-sightedness) — the eye sees better at distance than near. The eyeball is too short, so light focuses behind the retina."},
+    {n:55,cat:'senses',q:"Astigmatism:",opts:["The eye sees better near than at a distance","The eye sees better at distance than at near","An irregular bending of light rays that results in blurring of vision at all distances","Loss of ability to focus on near objects in aging"],c:2,exp:"Astigmatism is caused by an irregularly shaped cornea or lens, causing light to focus at multiple points — blurring vision at all distances."},
+    {n:56,cat:'senses',q:"Presbyopia (aging eye):",opts:["This normal condition occurs in aging. It is the loss of the ability to focus on near objects","The eye sees better near than at a distance","The eye sees better at distance than at near","Irregular bending of light rays causing blurring at all distances"],c:0,exp:"Presbyopia is the age-related loss of the eye's ability to focus on near objects, due to decreased elasticity of the lens. Normal in aging."},
+];
+
+let curCat = 'all', questions = [], answered = 0, score = 0, wrong = 0;
+
+function selCat(cat, btn) {
+    curCat = cat;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const n = cat === 'all' ? ALL.length : ALL.filter(q => q.cat === cat).length;
+    document.getElementById('qCount').textContent = n;
+}
+
+function startQuiz() {
+    questions = curCat === 'all' ? [...ALL] : ALL.filter(q => q.cat === curCat);
+    answered = 0;
+    score = 0;
+    wrong = 0;
+    document.getElementById('startScreen').style.display = 'none';
+    document.getElementById('resultsBox').style.display = 'none';
+    document.getElementById('quizWrapper').style.display = 'block';
+    document.getElementById('stickyBar').style.display = 'block';
+    updateSticky();
+    renderCards();
+}
+
+function mkHdr(txt) {
+    const d = document.createElement('div');
+    d.className = 'sec-hdr';
+    d.innerHTML = '<div class="line"></div><div class="lbl">' + txt + '</div><div class="line r"></div>';
+    return d;
+}
+
+function renderCards() {
+    const c = document.getElementById('cardsContainer');
+    c.innerHTML = '';
+    const cats = curCat === 'all' ? ORDER : [curCat];
+    let gi = 0;
+    cats.forEach(cat => {
+        const cqs = questions.filter(q => q.cat === cat);
+        if (!cqs.length) return;
+        c.appendChild(mkHdr(CATS[cat]));
+        cqs.forEach(q => {
+            const i = gi++;
+            const card = document.createElement('div');
+            card.className = 'q-card';
+            card.id = 'card-' + i;
+            card.style.animationDelay = Math.min(i * 0.018, 0.5) + 's';
+            const oh = q.opts.map((o, li) => '<button class="opt" data-orig="' + li + '" data-letter="' + L[li] + '" onclick="checkAns(' + i + ',' + li + ',' + q.c + ')">' + o + '</button>').join('');
+            card.innerHTML = '<div class="q-header"><div class="q-num">Q' + q.n + '</div><div class="cat-tag">' + CATS[q.cat] + '</div></div><div class="q-text">' + q.q + '</div><div class="opts" id="opts-' + i + '">' + oh + '</div><div class="q-feedback" id="fb-' + i + '"></div>';
+            c.appendChild(card);
+        });
+    });
+    document.getElementById('submitBtn').disabled = true;
+}
+
+function checkAns(qi, chosen, correct) {
+    const od = document.getElementById('opts-' + qi);
+    if (od.querySelector('.correct,.wrong')) return;
+    const ok = chosen === correct;
+    Array.from(od.querySelectorAll('.opt')).forEach(b => {
+        b.disabled = true;
+        if (+b.dataset.orig === correct) b.classList.add('correct');
+        else if (+b.dataset.orig === chosen && !ok) b.classList.add('wrong');
+    });
+    const fb = document.getElementById('fb-' + qi);
+    fb.style.display = 'block';
+    fb.className = 'q-feedback ' + (ok ? 'correct' : 'wrong');
+    fb.textContent = (ok ? '✅ Correct! ' : '❌ Wrong. ') + questions[qi].exp;
+    document.getElementById('card-' + qi).classList.add(ok ? 'answered-correct' : 'answered-wrong');
+    if (ok) score++;
+    else wrong++;
+    answered++;
+    updateSticky();
+    if (answered === questions.length) {
+        document.getElementById('submitBtn').disabled = false;
+        setTimeout(() => document.getElementById('submitBtn').scrollIntoView({ behavior: 'smooth', block: 'center' }), 400);
+    }
+}
+
+function updateSticky() {
+    const t = questions.length;
+    const pct = answered > 0 ? Math.round(score / answered * 100) : 0;
+    document.getElementById('sNum').textContent = answered + '/' + t + ' أجبت';
+    document.getElementById('sC').textContent = '✅ ' + score;
+    document.getElementById('sW').textContent = '❌ ' + wrong;
+    document.getElementById('sP').textContent = '📊 ' + pct + '%';
+    document.getElementById('sFill').style.width = (t > 0 ? Math.round(answered / t * 100) : 0) + '%';
+}
+
+function showResults() {
+    const t = questions.length;
+    const pct = Math.round(score / t * 100);
+    document.getElementById('rScore').textContent = score;
+    document.getElementById('rTotal').textContent = t;
+    document.getElementById('rC').textContent = score;
+    document.getElementById('rW').textContent = wrong;
+    document.getElementById('rP').textContent = pct + '%';
+    setTimeout(() => {
+        document.getElementById('ringFg').style.strokeDashoffset = 402 - (402 * pct / 100);
+    }, 100);
+    document.getElementById('rMsg').textContent = pct >= 90 ? '🌟 ممتاز! أنت متقن!' : pct >= 75 ? '👏 جيد جداً! مجهود رائع!' : pct >= 60 ? '👍 جيد! راجع الغلط!' : '📚 تحتاج مراجعة — إنت قادر!';
+    const rev = document.getElementById('reviewDiv');
+    rev.innerHTML = '<h3>📋 مراجعة الإجابات الغلط</h3>';
+    let hw = false;
+    questions.forEach((q, i) => {
+        const card = document.getElementById('card-' + i);
+        if (card && card.classList.contains('answered-wrong')) {
+            hw = true;
+            rev.innerHTML += '<div class="rev-item wrong"><div class="rt">❌ Q' + q.n + ': ' + q.q + '</div><div>✅ الإجابة الصحيحة: <strong>' + q.opts[q.c] + '</strong></div><div class="exp">' + q.exp + '</div></div>';
+        }
+    });
+    if (!hw) rev.innerHTML = '<p style="color:#22c55e;text-align:center;padding:24px;font-size:1.1em;">🎉 كل إجاباتك صح! ممتاز!</p>';
+    document.getElementById('resultsBox').style.display = 'block';
+    document.getElementById('resultsBox').scrollIntoView({ behavior: 'smooth' });
+}
+
+function goHome() {
+    document.getElementById('quizWrapper').style.display = 'none';
+    document.getElementById('stickyBar').style.display = 'none';
+    document.getElementById('startScreen').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.onload = () => {
+    document.getElementById('qCount').textContent = ALL.length;
+};
+</script>
+</body>
+</html>
